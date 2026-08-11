@@ -37,8 +37,12 @@ class MLModelService:
             self.cost_model = joblib.load('cost_model.pkl')
             self.label_encoders['recommended_structure'] = joblib.load('structure_encoder.pkl')
             
-        except FileNotFoundError:
-            print("ML models not found. Using rule-based fallback.")
+        except Exception as e:
+            print(f"ML models could not be loaded ({e}). Using rule-based fallback.")
+            self.runoff_model = None
+            self.structure_model = None
+            self.harvest_model = None
+            self.cost_model = None
             self.models_loaded = False
     
     def predict_runoff_coefficient(self, roof_type: str, roof_age: int, region: str):

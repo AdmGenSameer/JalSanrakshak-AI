@@ -10,9 +10,9 @@ services:
     expose:
       - "8000"
     volumes:
-      - backend_data:/app
+      - backend_data:/app/data
     environment:
-      - SQLITE_DB_PATH=rtrwh_assessment.db
+      - SQLITE_DB_PATH=/app/data/rtrwh_assessment.db
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/docs || exit 1"]
       interval: 30s

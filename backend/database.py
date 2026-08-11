@@ -2,7 +2,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+import os
 from config import settings
+
+# Ensure database directory exists if a path is provided
+db_dir = os.path.dirname(settings.SQLITE_DB_PATH)
+if db_dir:
+    os.makedirs(db_dir, exist_ok=True)
 
 # Create SQLite engine
 engine = create_engine(
