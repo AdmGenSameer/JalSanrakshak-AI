@@ -1,5 +1,5 @@
 // Simple API client for backend endpoints
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 // Types aligned with backend/schemas.py (subset we use)
 export type AssessmentCreate = {
