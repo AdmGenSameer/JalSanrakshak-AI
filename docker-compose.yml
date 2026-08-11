@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     container_name: varun_ventures_backend
     restart: always
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     volumes:
       - backend_data:/app
     environment:
@@ -18,6 +18,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - dokploy-network
 
   frontend:
     build:
@@ -25,10 +27,17 @@ services:
       dockerfile: Dockerfile
     container_name: varun_ventures_frontend
     restart: always
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     depends_on:
       - backend
+    networks:
+      - dokploy-network
 
 volumes:
   backend_data:
+
+networks:
+  dokploy-network:
+    external: true
+
