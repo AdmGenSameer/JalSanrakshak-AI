@@ -95,7 +95,7 @@ The system removes guesswork and transforms awareness into **clear, data-backed 
 
 ## 📁 Repository
 GitHub Repository:  
-👉 https://github.com/PulkitAg13/SIH25065-Varun-Ventures
+👉 https://github.com/AdmGenSameer/JalSanrakshak-AI
 
 Prototype Video:  
 👉 https://www.youtube.com/watch?v=SiZggrtaR3E
