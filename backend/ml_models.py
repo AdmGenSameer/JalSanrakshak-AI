@@ -20,22 +20,24 @@ class MLModelService:
     
     def load_models(self):
         """Load trained ML models"""
+        import os
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         try:
             # Load runoff coefficient model
-            self.runoff_model = joblib.load('runoff_model.pkl')
-            self.label_encoders['roof_type'] = joblib.load('roof_type_encoder.pkl')
+            self.runoff_model = joblib.load(os.path.join(base_dir, 'runoff_model.pkl'))
+            self.label_encoders['roof_type'] = joblib.load(os.path.join(base_dir, 'roof_type_encoder.pkl'))
             
             # Load structure recommendation model
-            self.structure_model = joblib.load('structure_model.pkl')
-            self.label_encoders['soil_type'] = joblib.load('soil_type_encoder.pkl')
-            self.label_encoders['aquifer_type'] = joblib.load('aquifer_type_encoder.pkl')
+            self.structure_model = joblib.load(os.path.join(base_dir, 'structure_model.pkl'))
+            self.label_encoders['soil_type'] = joblib.load(os.path.join(base_dir, 'soil_type_encoder.pkl'))
+            self.label_encoders['aquifer_type'] = joblib.load(os.path.join(base_dir, 'aquifer_type_encoder.pkl'))
             
             # Load water harvest model
-            self.harvest_model = joblib.load('harvest_model.pkl')
+            self.harvest_model = joblib.load(os.path.join(base_dir, 'harvest_model.pkl'))
             
             # Load cost model
-            self.cost_model = joblib.load('cost_model.pkl')
-            self.label_encoders['recommended_structure'] = joblib.load('structure_encoder.pkl')
+            self.cost_model = joblib.load(os.path.join(base_dir, 'cost_model.pkl'))
+            self.label_encoders['recommended_structure'] = joblib.load(os.path.join(base_dir, 'structure_encoder.pkl'))
             
         except Exception as e:
             print(f"ML models could not be loaded ({e}). Using rule-based fallback.")
