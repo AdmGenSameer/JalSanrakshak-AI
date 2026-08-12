@@ -1,3 +1,11 @@
+# Stage 1: Fetch Git LFS model files from public GitHub repository
+FROM alpine/git:latest AS models
+
+WORKDIR /repo
+
+RUN git lfs install && git clone https://github.com/AdmGenSameer/JalSanrakshak-AI.git . && git lfs pull
+
+# Stage 2: Backend runtime
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -8,14 +16,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install python packages
-COPY requirements.txt .
+COPY ./backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
-COPY . .
+COPY ./backend/ .
+
+# Copy real Git LFS .pkl model files from stage 1
+COPY --from=models /repo/backend/*.pkl ./
 
 # Expose port
 EXPOSE 8000
 
 # Run FastAPI app with uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
