@@ -40,7 +40,8 @@ class MLModelService:
             self.label_encoders['recommended_structure'] = joblib.load(os.path.join(base_dir, 'structure_encoder.pkl'))
             
         except Exception as e:
-            print(f"ML models could not be loaded ({e}). Using rule-based fallback.")
+            import traceback
+            print(f"ML models could not be loaded ({e}). Traceback: {traceback.format_exc()}")
             self.runoff_model = None
             self.structure_model = None
             self.harvest_model = None
