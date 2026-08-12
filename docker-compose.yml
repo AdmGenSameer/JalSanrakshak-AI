@@ -3,10 +3,8 @@ version: '3.8'
 services:
   backend:
     build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-      args:
-        - GITHUB_TOKEN=${GITHUB_TOKEN}
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend
     restart: always
     expose:
