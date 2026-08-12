@@ -31,7 +31,7 @@ class AssessmentUpdate(BaseModel):
     feedback_notes: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Assessment(AssessmentBase):
     id: int
@@ -52,7 +52,7 @@ class Assessment(AssessmentBase):
     updated_at: Optional[datetime]
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # ML Prediction schemas
 class MLPredictionRequest(BaseModel):
