@@ -1,9 +1,11 @@
-# Stage 1: Fetch Git LFS model files from public GitHub repository
+# Stage 1: Fetch Git LFS model files from private GitHub repository
 FROM alpine/git:latest AS models
+
+ARG GITHUB_TOKEN
 
 WORKDIR /repo
 
-RUN git lfs install && git clone https://github.com/AdmGenSameer/JalSanrakshak-AI.git . && git lfs pull
+RUN git lfs install && git clone https://${GITHUB_TOKEN}@github.com/AdmGenSameer/JalSanrakshak-AI.git . && git lfs pull
 
 # Stage 2: Backend runtime
 FROM python:3.11-slim

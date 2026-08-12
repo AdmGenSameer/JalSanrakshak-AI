@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./backend/Dockerfile
+      args:
+        - GITHUB_TOKEN=${GITHUB_TOKEN}
     container_name: backend
     restart: always
     expose:
