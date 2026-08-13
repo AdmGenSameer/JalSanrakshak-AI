@@ -64,9 +64,10 @@ export const api = {
     http<Assessment>(`/assessments/`, { method: 'POST', body: JSON.stringify(payload) }),
   getAssessment: (id: number) => http<Assessment>(`/assessments/${id}`),
   getRainfall: (latitude: number, longitude: number) =>
-    http<RainfallResponse>(`/api/rainfall`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
+    http<RainfallResponse>(`/rainfall`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
   getGroundwater: (latitude: number, longitude: number) =>
-    http<GroundwaterResponse>(`/api/groundwater`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
+    http<GroundwaterResponse>(`/groundwater`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
   getAquiferInfo: (aquifer_type: string) =>
-    http<AquiferInfoResponse>(`/api/aquifer?aquifer_type=${encodeURIComponent(aquifer_type)}`),
+    http<AquiferInfoResponse>(`/aquifer?aquifer_type=${encodeURIComponent(aquifer_type)}`),
 };
+
