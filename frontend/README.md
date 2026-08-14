@@ -1,249 +1,122 @@
-# 🏠 JanSanrakshak AI - Rainwater Harvesting Assessment Tool
+# JalSanrakshakAI — Developer Guide
 
-An intelligent React.js application for assessing rooftop rainwater harvesting potential with AI-powered analysis and personalized recommendations.
+This document helps developers quickly understand the codebase and where to make changes for common features like the Assessment form, satellite map, geocoding, and progress tank.
 
-## 🌟 Features
+## Tech stack
+- Vite + React 18 + TypeScript
+- TailwindCSS + shadcn/ui (Radix primitives)
+- react-router-dom
+- Leaflet + react-leaflet (satellite tiles via Esri World Imagery)
 
-### Core Functionality
-- **5-Tab Assessment Interface**: Assessment, Recommendations, Results, Groundwater Info, About
-- **Intelligent Form Validation**: Real-time validation with Formik and Yup
-- **Dynamic Calculations**: AI-powered water harvesting potential analysis
-- **Interactive Charts**: Plotly.js visualizations for rainfall, cost-benefit, efficiency
-- **PDF Report Generation**: Comprehensive assessment reports
-- **Responsive Design**: Mobile-friendly Material-UI interface
+## Run locally
+Prereqs: Node 18+ and npm
 
-### Assessment Capabilities
-- ✅ Harvestable water calculation based on roof area and local rainfall
-- ✅ System efficiency analysis (runoff, collection, storage)
-- ✅ Cost-benefit analysis with 10-year financial projection
-- ✅ Environmental impact assessment
-- ✅ Personalized system recommendations
-- ✅ Groundwater recharge potential analysis
-- ✅ Technical specifications and maintenance schedules
-
-## 🛠️ Tech Stack
-
-- **Frontend**: React 19.x + Vite
-- **UI Framework**: Material-UI (MUI)
-- **Charts**: Plotly.js / React-Plotly.js
-- **Forms**: Formik + Yup validation
-- **State Management**: React Context API
-- **API Client**: Axios
-- **PDF Generation**: jsPDF + html2canvas
-- **Styling**: Material-UI + Custom CSS
-
-## 📦 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/AdmGenSameer/JanSanrakshakAI.git
-   cd JanSanrakshakAI/Website
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Environment Setup**
-   ```bash
-   cp .env.example .env.local
-   # Edit .env.local with your API endpoints
-   ```
-
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Build for production**
-   ```bash
-   npm run build
-   ```
-
-## 🏗️ Project Structure
-
-```
-src/
-├── components/           # React components
-│   ├── charts/          # Chart components (Plotly.js)
-│   ├── tabs/            # Tab content components
-│   ├── UserInputForm.jsx
-│   ├── MetricsCard.jsx
-│   ├── TabsLayout.jsx
-│   ├── SaveAssessmentButton.jsx
-│   ├── FeedbackForm.jsx
-│   └── GoogleEarthLink.jsx
-├── context/             # React Context for state management
-│   └── AppContext.jsx
-├── services/            # API services
-│   └── apiService.js
-├── utils/               # Utility functions
-│   └── calculations.js
-├── App.jsx             # Main App component
-├── App.css             # Custom styles
-└── main.jsx            # Application entry point
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-```env
-VITE_API_BASE_URL=http://localhost:8000
-VITE_GOOGLE_MAPS_API_KEY=your_api_key
-VITE_APP_NAME=JanSanrakshak AI
-VITE_APP_VERSION=1.0.0
-```
-
-### API Endpoints
-The application expects the following backend endpoints:
-
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/assessments` | POST | Save assessment data |
-| `/api/geocode` | POST | Convert location to coordinates |
-| `/api/rainfall` | GET | Monthly rainfall data |
-| `/api/groundwater` | GET | Groundwater information |
-| `/api/soil-type` | GET | Soil type data |
-| `/api/calculate` | POST | RWH calculations |
-| `/api/recommend` | POST | System recommendations |
-| `/api/aquifer` | GET | Aquifer information |
-| `/api/predict` | POST | ML-based predictions |
-| `/api/feedback` | POST | User feedback |
-
-## 📊 Key Calculations
-
-### Water Harvesting Potential
-```javascript
-harvestableWater = roofArea × annualRainfall × runoffCoeff × collectionEff
-```
-
-### System Efficiency
-```javascript
-overallEfficiency = runoffCoeff × collectionEff × storageEff
-```
-
-### Financial Analysis
-- Installation cost estimation based on roof area and system type
-- Annual savings calculation based on local water rates
-- 10-year cumulative savings projection
-- Payback period analysis
-
-### Environmental Impact
-- Groundwater recharge potential (70% of harvested water)
-- CO₂ reduction from reduced pumping
-- Energy savings calculation
-
-## 🎨 UI Components
-
-### MetricsCard
-Displays key assessment metrics with icons and formatting:
-- Harvestable water volume
-- Installation costs
-- Payback periods
-- System efficiency ratings
-
-### Chart Components
-1. **MonthlyRainfallChart**: Bar chart showing seasonal patterns
-2. **CostBenefitChart**: Line chart for financial projections
-3. **WaterBalanceChart**: Pie chart for water distribution
-4. **EfficiencyGauge**: Multiple gauge charts for system efficiency
-5. **WaterTrendsChart**: Historical groundwater trends
-
-### Form Components
-- **UserInputForm**: Main assessment form with validation
-- **FeedbackForm**: User feedback collection with ratings
-- Formik-based validation with real-time error display
-
-## 🚀 Deployment
-
-### Build Process
-```bash
+```sh
+npm install
+npm run dev
+# build
 npm run build
-npm run preview  # Test production build locally
 ```
 
-### Docker Support
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 4173
-CMD ["npm", "run", "preview"]
-```
+## Environment variables
+No API key is required for address geocoding (uses OpenStreetMap Nominatim). No special env vars needed.
 
-## 📱 Responsive Design
+## Project structure (key paths)
+- `src/pages/Assessment.tsx` — Main multi-step form page (most edits happen here)
+- `src/components/MapLocator.tsx` — Reusable Leaflet satellite map component
+- `src/components/WaterTank.tsx` — Tank visualization that fills based on progress
+- `src/main.tsx` — Global CSS and Leaflet CSS import
+- `src/components/ui/*` — shadcn/ui building blocks (Button, Card, Select, etc.)
+- `tailwind.config.ts` — Design tokens, themes, animations
 
-- **Desktop**: Full feature set with side-by-side layouts
-- **Tablet**: Stacked components with touch-friendly controls
-- **Mobile**: Single-column layout with collapsible sections
-- **Charts**: Automatically resize based on viewport
+## Assessment form — where to change what
+File: `src/pages/Assessment.tsx`
 
-## 🔒 Security Considerations
+Sections (steps):
+- Step 1 (Basic Information): name, address (with geocoding), number of dwellers
+- Step 2 (Property Details): Google Earth CTA, roof area, open space
+- Step 3 (Roof Specifications): roof type, soil type, roof age
+- Step 4 (Review): summary of entered details
 
-- Input validation on both client and server side
-- XSS protection through proper data sanitization
-- CSRF protection for API calls
-- Environment variable protection for sensitive keys
+Common edits:
+- Add/rename a field
+	- Update `interface FormData` at top.
+	- Initialize new fields in `useState<FormData>(...)`.
+	- Render inputs in the appropriate Step UI.
+	- If it affects progress, include it in the `formCompletion` checks.
 
-## 🧪 Testing
+- Change labels or helper text
+	- Edit the corresponding `<Label>` / `<p className="text-xs ...">` blocks within the step.
 
-```bash
-npm run test          # Run unit tests
-npm run test:coverage # Generate coverage report
-npm run lint          # ESLint checks
-```
+- Move the Google Earth helper
+	- The CTA block is in Step 2 above the roof area input. Search for "Helper: Google Earth CTA (above roof area)".
 
-## 🤝 Contributing
+- Progress/tank filling rule
+	- See `formCompletion` computed value near the top of the component. It maps to `<WaterTank progress={formCompletion} />` in the sidebar. Adjust required fields or weighting there.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Map & satellite view
+File: `src/components/MapLocator.tsx`
 
-## 📄 License
+Features:
+- Satellite tiles via Esri World Imagery
+- Red pin marker
+- Geolocation "Locate Me" button (optional)
+- Click-to-place and draggable pin (when `interactive` is true)
+- Controlled mode (pass `position={[lat, lng]}`) for read-only displays
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Important props:
+- `position?: [number, number] | null` — When provided, the map centers and shows the pin here.
+- `interactive?: boolean` — Enable/disable click/drag interactions.
+- `showLocateButton?: boolean` — Show/hide the "Locate Me" button.
+- `onLocate?(lat, lng)` — Called when user locates/adjusts the pin.
 
-## 🙏 Acknowledgments
+Where it's used:
+- Assessment Sidebar card "Detected Location" renders `MapLocator` in read-only mode once coordinates are known.
 
-- **Data Sources**: India Meteorological Department (IMD), Central Ground Water Board (CGWB)
-- **UI Framework**: Material-UI team for the excellent component library
-- **Charts**: Plotly.js for interactive data visualization
-- **Icons**: Material Design Icons
+Leaflet CSS:
+- Imported globally in `src/main.tsx`:
+	```ts
+	import 'leaflet/dist/leaflet.css';
+	```
 
-## 📞 Support
+## Geocoding (OpenStreetMap Nominatim)
+File: `src/pages/Assessment.tsx`
 
-For support, email support@jansanrakshak.ai or create an issue in this repository.
+- Function `geocodeAddress(address)` calls OSM Nominatim (no key needed).
+- Debounced by ~5s after user stops typing in the Location/Address field (inside a `useEffect`).
+- On success, `formData.latitude` and `formData.longitude` are set.
+- The right sidebar renders the satellite map with those coordinates (read-only) and sends them to Google Earth.
 
-## 🗺️ Roadmap
+Google Earth link:
+- Function `generateGoogleEarthLink()` prioritizes coordinates if available, else falls back to address.
 
-- [ ] Real-time weather data integration
-- [ ] Machine learning model for system optimization
-- [ ] Multi-language support
-- [ ] Mobile app development
-- [ ] Integration with IoT sensors
-- [ ] Community sharing features
+## Water tank progress
+File: `src/components/WaterTank.tsx` and usage in `Assessment.tsx`
 
----
+- `WaterTank` accepts a `progress` number (0–100) to fill the tank.
+- In `Assessment.tsx`, it is bound to `formCompletion` so it updates live as a user fills the form.
+- To change how completion is calculated, modify the `checks` array in `formCompletion`.
 
-**JanSanrakshak AI** - Empowering water security through intelligent assessment tools.+ Vite
+## UI library notes
+- shadcn/ui components live under `src/components/ui/` and wrap Radix primitives.
+- Tailwind tokens (colors, shadows, animations) are defined in `tailwind.config.ts` and CSS variables.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Routing
+- Pages live in `src/pages/`. The app uses `react-router-dom` for navigation; see `src/App.tsx` for route config.
 
-Currently, two official plugins are available:
+## Troubleshooting
+- Map tiles/controls not styled:
+	- Ensure `import 'leaflet/dist/leaflet.css'` exists in `src/main.tsx`.
+- Geocoding not working:
+		- Nominatim may rate-limit; try again after a short delay or reduce request frequency.
+- Map doesn’t show in sidebar:
+	- It renders only after coordinates are detected. Type a full address and wait ~5s.
+- TypeScript warnings in Map component:
+	- We intentionally alias some react-leaflet components to avoid prop typing false positives. Leave as-is unless refactoring types.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Contributing
+- Use TypeScript and keep components small and focused.
+- Follow existing patterns for shadcn/ui and Tailwind classes.
+- Prefer controlled props and lifting state when you need to drive UI from parent components.
 
-## React Compiler
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
