@@ -46,6 +46,11 @@
     --gradient-hero: radial-gradient(circle at top right, hsl(185 30% 90%), hsl(60 20% 98%) 60%);
     --gradient-water: linear-gradient(135deg, hsl(185 80% 20%), hsl(180 100% 35%));
 
+    /* Water Tank Colors */
+    --water-light: 199 89% 48%;
+    --water-blue: 204 94% 40%;
+    --water-dark: 201 96% 32%;
+
     /* Shadows - Deep and crisp */
     --shadow-soft: 0 10px 40px -10px rgba(10, 30, 40, 0.08);
     --shadow-glow: 0 0 40px rgba(20, 150, 160, 0.15);
