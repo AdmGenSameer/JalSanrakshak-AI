@@ -1,5 +1,5 @@
 // Simple API client for backend endpoints
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 // Types aligned with backend/schemas.py (subset we use)
 export type AssessmentCreate = {
@@ -48,7 +48,13 @@ export type AquiferInfoResponse = {
 };
 
 async function http<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
+  // Ensure path clean joins with API_BASE_URL (avoiding duplicate /api prefix)
+  const cleanPath = path.startsWith('/api/') ? path.substring(4) : path;
+  const url = API_BASE_URL.endsWith('/') 
+    ? `${API_BASE_URL}${cleanPath.startsWith('/') ? cleanPath.substring(1) : cleanPath}`
+    : `${API_BASE_URL}${cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`}`;
+
+  const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
@@ -64,9 +70,9 @@ export const api = {
     http<Assessment>(`/assessments/`, { method: 'POST', body: JSON.stringify(payload) }),
   getAssessment: (id: number) => http<Assessment>(`/assessments/${id}`),
   getRainfall: (latitude: number, longitude: number) =>
-    http<RainfallResponse>(`/api/rainfall`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
+    http<RainfallResponse>(`/rainfall`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
   getGroundwater: (latitude: number, longitude: number) =>
-    http<GroundwaterResponse>(`/api/groundwater`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
+    http<GroundwaterResponse>(`/groundwater`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
   getAquiferInfo: (aquifer_type: string) =>
-    http<AquiferInfoResponse>(`/api/aquifer?aquifer_type=${encodeURIComponent(aquifer_type)}`),
+    http<AquiferInfoResponse>(`/aquifer?aquifer_type=${encodeURIComponent(aquifer_type)}`),
 };
