@@ -1,4 +1,4 @@
-# Build stage
+# Multi-stage Docker build for React Vite TS frontend
 FROM node:20-alpine AS build
 
 WORKDIR /app
@@ -9,7 +9,6 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Production stage
 FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html

@@ -221,11 +221,11 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background texture-noise">
+    <div className="min-h-screen bg-gradient-sky">
       {/* Chatbot FAB */}
       {!chatbotOpen && (
         <button
-          className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-soft flex items-center justify-center cursor-pointer z-50 hover:scale-105 transition-smooth"
+          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer z-50 hover:scale-110 transition-transform duration-200"
           onClick={() => setChatbotOpen(true)}
           title="Chat with Jal Rakshak AI"
         >
@@ -235,12 +235,12 @@ const Home = () => {
 
       {/* Chatbot Modal */}
       {chatbotOpen && (
-        <div className="fixed bottom-24 right-6 w-[400px] h-[550px] bg-card rounded-xl shadow-soft z-50 flex flex-col border border-border overflow-hidden fade-in">
+        <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col border border-gray-200">
           {/* Header */}
-          <div className="bg-primary text-primary-foreground p-5 flex justify-between items-center">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-2xl flex justify-between items-center">
             <div>
-              <h3 className="font-display font-medium text-lg tracking-tight">Jal Rakshak AI</h3>
-              <p className="text-primary-foreground/80 text-sm font-sans">Smart Assessment Assistant</p>
+              <h3 className="font-semibold">Jal Rakshak AI Assistant</h3>
+              <p className="text-blue-100 text-sm">Smart Rooftop Monitoring</p>
             </div>
             <div className="flex items-center gap-2">
               {/* TTS Toggle Button */}
@@ -270,21 +270,21 @@ const Home = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-5 bg-background/50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-5 py-3 ${
+                  className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                     message.isUser
-                      ? 'bg-primary text-primary-foreground rounded-br-sm'
-                      : 'bg-card text-card-foreground border border-border shadow-sm rounded-bl-sm'
+                      ? 'bg-blue-600 text-white rounded-br-none'
+                      : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
                   }`}
                 >
-                  <p className="text-sm font-sans leading-relaxed">{message.content}</p>
-                  <p className={`text-[10px] mt-2 font-medium uppercase tracking-wider ${message.isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isUser ? 'text-blue-200' : 'text-gray-500'}`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -292,11 +292,11 @@ const Home = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-card border border-border shadow-sm rounded-2xl rounded-bl-sm px-5 py-4">
+                <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-2">
                   <div className="flex space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce"></div>
-                    <div className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-1.5 h-1.5 bg-primary/80 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>
@@ -305,20 +305,20 @@ const Home = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-border bg-card">
-            <div className="flex space-x-3">
+          <div className="p-4 border-t border-gray-200 bg-white rounded-b-2xl">
+            <div className="flex space-x-2">
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about rainwater harvesting..."
-                className="flex-1 bg-input/50 focus-visible:ring-1 focus-visible:ring-primary border-none shadow-none"
+                className="flex-1"
                 disabled={isLoading}
               />
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isLoading}
-                className="bg-primary hover:bg-primary-light text-primary-foreground shadow-none"
+                className="bg-blue-600 hover:bg-blue-700"
                 size="icon"
               >
                 <Send className="h-4 w-4" />
@@ -342,31 +342,32 @@ const Home = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 overflow-hidden fade-in">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-7 space-y-10">
-              <div className="space-y-6">
-                <h1 className="text-5xl lg:text-7xl font-display font-light leading-[1.1] tracking-tight text-foreground">
-                  Smart <span className="font-serif italic text-primary">Rainwater</span>
-                  <br />Harvesting with AI.
+      <section className="relative pt-20 pb-16 overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+                  Smart <span className="bg-gradient-water bg-clip-text text-transparent">Rainwater</span>
+                  <br />Harvesting with AI
                 </h1>
-                <p className="text-xl lg:text-2xl text-muted-foreground font-sans font-light leading-relaxed max-w-2xl">
+                <p className="text-xl text-muted-foreground leading-relaxed">
                   Discover your water conservation potential with our AI-powered assessment tool. 
-                  Get personalized recommendations and technical specifications.
+                  Get personalized recommendations, cost analysis, and technical specifications 
+                  for implementing rainwater harvesting systems.
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-5">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/assessment">
-                  <Button size="xl" className="group bg-primary text-primary-foreground rounded-full px-8 hover:bg-primary-light transition-smooth text-base">
-                    <Droplets className="h-5 w-5 mr-2" />
+                  <Button variant="hero" size="xl" className="group">
+                    <Droplets className="h-5 w-5" />
                     Start Free Assessment
-                    <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="xl" className="rounded-full px-8 text-base border-border hover:bg-secondary/50 transition-smooth">
-                  <Zap className="h-5 w-5 mr-2" />
+                <Button variant="glass" size="xl">
+                  <Zap className="h-5 w-5" />
                   See Demo
                 </Button>
               </div>
@@ -382,43 +383,48 @@ const Home = () => {
               </div>
             </div>
             
-            <div className="lg:col-span-5 relative flex items-center justify-center">
+            <div className="relative">
               {/* Interactive Splash Screen */}
-              <div className="relative w-full">
+              <div className="relative rounded-2xl overflow-hidden shadow-water h-96">
                 <SplashScreen 
                   autoPlay={true}
-                  className="w-full h-auto"
+                  className="w-full h-full"
                 />
               </div>
+              
+              {/* Floating elements */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-aqua/20 rounded-full blur-xl animate-pulse" />
+              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-water-blue/20 rounded-full blur-xl animate-pulse" 
+                   style={{ animationDelay: '1s' }} />
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-secondary/30 border-y border-border/50">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center space-y-6 mb-16">
-            <h2 className="text-4xl lg:text-5xl font-display font-light tracking-tight">
-              Powered by <span className="font-serif italic text-primary">Advanced AI</span>
+      <section className="py-16 bg-background/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold">
+              Powered by <span className="bg-gradient-water bg-clip-text text-transparent">Advanced AI</span>
             </h2>
-            <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Our intelligent system analyzes multiple data sources to provide accurate, 
               personalized rainwater harvesting recommendations.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="glass-card border-border/40 shadow-sm hover:shadow-soft transition-smooth group">
-                <CardHeader className="text-center pt-8">
-                  <div className="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
+              <Card key={index} className="glass-card border-0 shadow-soft hover:shadow-water transition-all duration-300 group">
+                <CardHeader className="text-center">
+                  <div className="mx-auto w-12 h-12 bg-gradient-water rounded-lg flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform">
                     {feature.icon}
                   </div>
-                  <CardTitle className="text-2xl font-display font-medium">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="pb-8">
-                  <CardDescription className="text-center text-base font-light leading-relaxed">{feature.description}</CardDescription>
+                <CardContent>
+                  <CardDescription className="text-center">{feature.description}</CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -427,37 +433,33 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <h2 className="text-4xl lg:text-5xl font-display font-light tracking-tight">
-                What You'll <span className="font-serif italic text-primary">Discover</span>
+      <section className="py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl lg:text-4xl font-bold">
+                What You'll <span className="bg-gradient-water bg-clip-text text-transparent">Discover</span>
               </h2>
-              <p className="text-xl font-light text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground">
                 Get comprehensive insights about your rainwater harvesting potential 
                 with our detailed assessment and recommendations.
               </p>
               
-              <div className="space-y-5 pt-4">
+              <div className="space-y-4">
                 {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-4 group">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-smooth">
-                      <CheckCircle className="h-4 w-4 text-primary group-hover:text-primary-foreground transition-colors" />
-                    </div>
-                    <span className="text-lg font-light text-foreground">{benefit}</span>
+                  <div key={index} className="flex items-start gap-3 group">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 group-hover:scale-110 transition-transform" />
+                    <span className="text-foreground">{benefit}</span>
                   </div>
                 ))}
               </div>
               
-              <div className="pt-6">
-                <Link to="/assessment">
-                  <Button size="xl" className="group bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 transition-smooth">
-                    Get Started Now
-                    <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </div>
+              <Link to="/assessment">
+                <Button variant="water" size="lg" className="group">
+                  Get Started Now
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
             </div>
             
             <div className="relative">
@@ -493,27 +495,33 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <div className="text-center space-y-10 max-w-4xl mx-auto">
-            <h2 className="text-5xl lg:text-6xl font-display font-light tracking-tight">
-              Ready to <span className="font-serif italic">Save Water</span>?
+      <section className="py-16 bg-gradient-hero relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center space-y-6 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white">
+              Ready to Save Water and Money?
             </h2>
-            <p className="text-xl lg:text-2xl font-light text-primary-foreground/80 leading-relaxed">
+            <p className="text-xl text-white/90">
               Start your personalized rainwater harvesting assessment today. 
               It takes just 5 minutes to get comprehensive recommendations.
             </p>
-            <div className="pt-4">
-              <Link to="/assessment">
-                <Button size="xl" className="group bg-background text-foreground hover:bg-secondary rounded-full px-10 py-6 text-lg transition-smooth">
-                  <Droplets className="h-5 w-5 mr-3" />
-                  Start Your Assessment
-                  <ArrowRight className="h-5 w-5 ml-3 transition-transform group-hover:translate-x-2" />
-                </Button>
-              </Link>
-            </div>
+            <Link to="/assessment">
+              <Button variant="glass" size="xl" className="group">
+                <Droplets className="h-5 w-5" />
+                Start Your Assessment
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </div>
         </div>
+        
+        {/* Floating water droplets */}
+        <div className="absolute top-10 left-10 w-4 h-6 bg-white/30 rounded-full water-drop" />
+        <div className="absolute top-20 right-20 w-3 h-5 bg-white/20 rounded-full water-drop" 
+             style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-20 left-1/4 w-5 h-7 bg-white/25 rounded-full water-drop" 
+             style={{ animationDelay: '2s' }} />
       </section>
     </div>
   );

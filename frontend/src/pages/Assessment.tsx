@@ -237,22 +237,20 @@ const Assessment: React.FC = () => {
   const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
 
-  // Compute form completion progress for WaterTank (combines step progress and field completeness)
+  // Compute form completion progress for WaterTank (do not require lat/lng to hit 100%)
   const formCompletion = (() => {
     const checks = [
       !!formData.name.trim(),
-      !!formData.dwellers.toString().trim(),
       !!formData.location.trim(),
+      !!formData.dwellers.toString().trim(),
       !!formData.roofArea.toString().trim(),
       !!formData.openSpace.toString().trim(),
       !!formData.roofType.trim(),
       !!formData.roofAge.toString().trim(),
+      // soilType excluded from progress (no current input field)
     ];
-    const filledCount = checks.filter(Boolean).length;
-    const fieldCompletion = (filledCount / checks.length) * 100;
-    const stepProgress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-    // Water tank level rises dynamically with both field completion and step progression
-    return Math.max(fieldCompletion, Math.min(100, stepProgress * 0.75 + (filledCount / checks.length) * 25));
+    const filled = checks.filter(Boolean).length;
+    return (filled / checks.length) * 100;
   })();
 
   const updateFormData = (field: keyof FormData, value: string) => {
@@ -317,13 +315,7 @@ const Assessment: React.FC = () => {
       setShowMapPreview(true);
       toast({ title: 'Location found', description: `${result.lat.toFixed(5)}, ${result.lng.toFixed(5)}` });
     } else {
-      // Fallback default coordinates if client ad-blocker or Nominatim fails
-      const fallbackLat = 23.2599;
-      const fallbackLng = 77.4126;
-      setFormData(prev => ({ ...prev, latitude: fallbackLat, longitude: fallbackLng }));
-      lastGeocodedRef.current = address;
-      setShowMapPreview(true);
-      toast({ title: 'Approximate location set', description: `Map centered at coordinates (${fallbackLat}, ${fallbackLng})` });
+      toast({ title: 'Location not found', description: 'Please refine the address and try again.', variant: 'destructive' });
     }
   };
 
@@ -382,12 +374,12 @@ const Assessment: React.FC = () => {
     switch (currentStep) {
       case 1:
         return (
-          <Card className="glass-card border border-border/50 shadow-soft">
-            <CardHeader className="text-center pt-8">
-              <div className="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+          <Card className="glass-card border-0 shadow-water">
+            <CardHeader className="text-center">
+              <div className="mx-auto w-12 h-12 bg-gradient-water rounded-lg flex items-center justify-center text-white mb-4">
                 <Users className="h-6 w-6" />
               </div>
-              <CardTitle className="text-3xl font-display font-medium">Basic Information</CardTitle>
+              <CardTitle className="text-2xl">Basic Information</CardTitle>
               <CardDescription>Let's start with some basic details about you and your property</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -435,10 +427,11 @@ const Assessment: React.FC = () => {
                 <div className="pt-2 flex items-center gap-2">
                   <Button
                     type="button"
+                    variant="water"
                     size="sm"
                     onClick={handleViewOnMap}
                     disabled={!formData.location.trim() || geoLoading}
-                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-primary-foreground transition-smooth rounded-full px-4"
+                    className="inline-flex items-center gap-2"
                   >
                     {geoLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                     View on Map
@@ -465,12 +458,12 @@ const Assessment: React.FC = () => {
 
       case 2:
         return (
-          <Card className="glass-card border border-border/50 shadow-soft">
-            <CardHeader className="text-center pt-8">
-              <div className="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+          <Card className="glass-card border-0 shadow-water">
+            <CardHeader className="text-center">
+              <div className="mx-auto w-12 h-12 bg-gradient-water rounded-lg flex items-center justify-center text-white mb-4">
                 <HomeIcon className="h-6 w-6" />
               </div>
-              <CardTitle className="text-3xl font-display font-medium">Property Details</CardTitle>
+              <CardTitle className="text-2xl">Property Details</CardTitle>
               <CardDescription>Tell us about your roof and available space</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -483,7 +476,8 @@ const Assessment: React.FC = () => {
                   </div>
                   <Button
                     onClick={() => window.open(generateGoogleEarthLink(), '_blank')}
-                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-primary-foreground transition-smooth rounded-full"
+                    variant="water"
+                    className="inline-flex items-center gap-2"
                   >
                     Measure on Google Earth
                     <ExternalLink className="h-4 w-4" />
@@ -529,12 +523,12 @@ const Assessment: React.FC = () => {
 
       case 3:
         return (
-          <Card className="glass-card border border-border/50 shadow-soft">
-            <CardHeader className="text-center pt-8">
-              <div className="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+          <Card className="glass-card border-0 shadow-water">
+            <CardHeader className="text-center">
+              <div className="mx-auto w-12 h-12 bg-gradient-water rounded-lg flex items-center justify-center text-white mb-4">
                 <Layers className="h-6 w-6" />
               </div>
-              <CardTitle className="text-3xl font-display font-medium">Roof Specifications</CardTitle>
+              <CardTitle className="text-2xl">Roof Specifications</CardTitle>
               <CardDescription>Details about your roof type and condition</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -578,12 +572,12 @@ const Assessment: React.FC = () => {
 
       case 4:
         return (
-          <Card className="glass-card border border-border/50 shadow-soft">
-            <CardHeader className="text-center pt-8">
-              <div className="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+          <Card className="glass-card border-0 shadow-water">
+            <CardHeader className="text-center">
+              <div className="mx-auto w-12 h-12 bg-gradient-water rounded-lg flex items-center justify-center text-white mb-4">
                 <Calculator className="h-6 w-6" />
               </div>
-              <CardTitle className="text-3xl font-display font-medium">Review & Calculate</CardTitle>
+              <CardTitle className="text-2xl">Review & Calculate</CardTitle>
               <CardDescription>Review your information and generate your personalized assessment</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -615,11 +609,11 @@ const Assessment: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background texture-noise">
+    <div className="min-h-screen bg-gradient-sky">
       {/* Chatbot FAB */}
       {!chatbotOpen && (
         <button
-          className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-soft flex items-center justify-center cursor-pointer z-50 hover:scale-105 transition-smooth"
+          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer z-50 hover:scale-110 transition-transform duration-200"
           onClick={() => setChatbotOpen(true)}
           title="Chat with Assessment Assistant"
         >
@@ -629,12 +623,12 @@ const Assessment: React.FC = () => {
 
       {/* Chatbot Modal */}
       {chatbotOpen && (
-        <div className="fixed bottom-24 right-6 w-[400px] h-[550px] bg-card rounded-xl shadow-soft z-50 flex flex-col border border-border overflow-hidden fade-in">
+        <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col border border-gray-200">
           {/* Header */}
-          <div className="bg-primary text-primary-foreground p-5 flex justify-between items-center">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-2xl flex justify-between items-center">
             <div>
-              <h3 className="font-display font-medium text-lg tracking-tight">Assessment Assistant</h3>
-              <p className="text-primary-foreground/80 text-sm font-sans">Get Help with Form Fields</p>
+              <h3 className="font-semibold">Assessment Assistant</h3>
+              <p className="text-blue-100 text-sm">Get Help with Form Fields</p>
             </div>
             <div className="flex items-center gap-2">
               {/* TTS Toggle Button */}
@@ -664,21 +658,21 @@ const Assessment: React.FC = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-5 bg-background/50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-5 py-3 ${
+                  className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                     message.isUser
-                      ? 'bg-primary text-primary-foreground rounded-br-sm'
-                      : 'bg-card text-card-foreground border border-border shadow-sm rounded-bl-sm'
+                      ? 'bg-blue-600 text-white rounded-br-none'
+                      : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
                   }`}
                 >
-                  <p className="text-sm font-sans leading-relaxed">{message.content}</p>
-                  <p className={`text-[10px] mt-2 font-medium uppercase tracking-wider ${message.isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isUser ? 'text-blue-200' : 'text-gray-500'}`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -686,11 +680,11 @@ const Assessment: React.FC = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-card border border-border shadow-sm rounded-2xl rounded-bl-sm px-5 py-4">
+                <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-2">
                   <div className="flex space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce"></div>
-                    <div className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-1.5 h-1.5 bg-primary/80 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>
@@ -699,20 +693,20 @@ const Assessment: React.FC = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-border bg-card">
-            <div className="flex space-x-3">
+          <div className="p-4 border-t border-gray-200 bg-white rounded-b-2xl">
+            <div className="flex space-x-2">
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about form fields..."
-                className="flex-1 bg-input/50 focus-visible:ring-1 focus-visible:ring-primary border-none shadow-none"
+                className="flex-1"
                 disabled={isLoading}
               />
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isLoading}
-                className="bg-primary hover:bg-primary-light text-primary-foreground shadow-none"
+                className="bg-blue-600 hover:bg-blue-700"
                 size="icon"
               >
                 <Send className="h-4 w-4" />
@@ -734,26 +728,26 @@ const Assessment: React.FC = () => {
 
       <Navbar />
       
-      <div className="pt-32 pb-16 fade-in">
-        <div className="container mx-auto px-6 lg:px-12">
+      <div className="pt-20 pb-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-6xl font-display font-light tracking-tight mb-6">
-              Rainwater Harvesting <span className="font-serif italic text-primary">Assessment</span>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl lg:text-4xl font-bold mb-4">
+              Rainwater Harvesting <span className="bg-gradient-water bg-clip-text text-transparent">Assessment</span>
             </h1>
-            <p className="text-xl font-light text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Complete this quick assessment to get personalized recommendations for your rainwater harvesting system
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Form Section */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6">
               {/* Progress Header */}
-              <Card className="glass-card border border-border/50 shadow-soft">
-                <CardContent className="pt-8">
+              <Card className="glass-card border-0">
+                <CardContent className="pt-6">
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm font-medium tracking-wide text-muted-foreground uppercase">
+                    <span className="text-sm font-medium text-muted-foreground">
                       Step {currentStep} of {totalSteps}
                     </span>
                     <span className="text-sm font-medium text-primary">
@@ -768,12 +762,12 @@ const Assessment: React.FC = () => {
               {renderStep()}
 
               {/* Navigation */}
-              <div className="flex justify-between pt-4">
+              <div className="flex justify-between">
                 <Button
                   variant="outline"
                   onClick={handlePrevious}
                   disabled={currentStep === 1}
-                  className="flex items-center gap-2 rounded-full px-6 transition-smooth"
+                  className="flex items-center gap-2"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Previous
@@ -781,16 +775,18 @@ const Assessment: React.FC = () => {
                 
                 {currentStep === totalSteps ? (
                   <Button
+                    variant="water"
                     onClick={handleSubmit}
-                    className="flex items-center gap-2 bg-primary hover:bg-primary-light text-primary-foreground rounded-full px-8 transition-smooth"
+                    className="flex items-center gap-2"
                   >
                     <Calculator className="h-4 w-4" />
                     Generate Assessment
                   </Button>
                 ) : (
                   <Button
+                    variant="water"
                     onClick={handleNext}
-                    className="flex items-center gap-2 bg-primary hover:bg-primary-light text-primary-foreground rounded-full px-8 transition-smooth"
+                    className="flex items-center gap-2"
                   >
                     Next Step
                     <ArrowRight className="h-4 w-4" />

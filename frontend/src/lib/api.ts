@@ -1,5 +1,5 @@
 // Simple API client for backend endpoints
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 // Types aligned with backend/schemas.py (subset we use)
 export type AssessmentCreate = {
@@ -64,10 +64,9 @@ export const api = {
     http<Assessment>(`/assessments/`, { method: 'POST', body: JSON.stringify(payload) }),
   getAssessment: (id: number) => http<Assessment>(`/assessments/${id}`),
   getRainfall: (latitude: number, longitude: number) =>
-    http<RainfallResponse>(`/rainfall`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
+    http<RainfallResponse>(`/api/rainfall`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
   getGroundwater: (latitude: number, longitude: number) =>
-    http<GroundwaterResponse>(`/groundwater`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
+    http<GroundwaterResponse>(`/api/groundwater`, { method: 'POST', body: JSON.stringify({ latitude, longitude }) }),
   getAquiferInfo: (aquifer_type: string) =>
-    http<AquiferInfoResponse>(`/aquifer?aquifer_type=${encodeURIComponent(aquifer_type)}`),
+    http<AquiferInfoResponse>(`/api/aquifer?aquifer_type=${encodeURIComponent(aquifer_type)}`),
 };
-

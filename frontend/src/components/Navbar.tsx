@@ -8,44 +8,44 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl bg-background/80 backdrop-blur-md border border-border/50 shadow-soft rounded-full px-4">
-      <div className="container mx-auto">
-        <div className="flex justify-between items-center h-14">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-2 group">
             <img 
               src={waterIcon} 
               alt="JalSanrakshak AI" 
-              className="h-7 w-7 transition-transform group-hover:scale-105" 
+              className="h-8 w-8 transition-transform group-hover:scale-110" 
             />
-            <span className="text-xl font-display font-medium text-foreground tracking-tight">
-              JalSanrakshak <span className="font-serif italic font-light">AI</span>
+            <span className="text-xl font-bold bg-gradient-water bg-clip-text text-transparent">
+              JalSanrakshak AI
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link 
               to="/" 
-              className="text-foreground/80 hover:text-primary transition-colors duration-300 font-sans text-sm"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Home
             </Link>
             <Link 
               to="/assessment" 
-              className="text-foreground/80 hover:text-primary transition-colors duration-300 font-sans text-sm"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Assessment
             </Link>
             <Link 
               to="/about" 
-              className="text-foreground/80 hover:text-primary transition-colors duration-300 font-sans text-sm"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               About
             </Link>
             <Link to="/assessment">
-            <Button size="sm" className="bg-primary hover:bg-primary-light text-primary-foreground transition-smooth rounded-full px-6 shadow-none">
-              <Droplets className="w-3.5 h-3.5" />
+            <Button variant="water" size="sm">
+              <Droplets className="w-4 h-4" />
               Start Assessment
             </Button>
             </Link>
@@ -65,34 +65,32 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-2 bg-card border border-border/50 rounded-2xl p-4 shadow-soft space-y-4 absolute top-full left-0 right-0 mx-2">
+          <div className="md:hidden border-t border-border/50 py-4 space-y-4">
             <Link 
               to="/" 
-              className="block px-4 py-2 text-foreground hover:bg-muted/50 rounded-lg transition-colors duration-200 font-sans text-sm"
+              className="block text-foreground hover:text-primary transition-colors duration-200 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
               to="/assessment" 
-              className="block px-4 py-2 text-foreground hover:bg-muted/50 rounded-lg transition-colors duration-200 font-sans text-sm"
+              className="block text-foreground hover:text-primary transition-colors duration-200 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               Assessment
             </Link>
             <Link 
               to="/about" 
-              className="block px-4 py-2 text-foreground hover:bg-muted/50 rounded-lg transition-colors duration-200 font-sans text-sm"
+              className="block text-foreground hover:text-primary transition-colors duration-200 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </Link>
-            <Link to="/assessment" className="block w-full">
-              <Button size="sm" className="w-full bg-primary hover:bg-primary-light text-primary-foreground transition-smooth rounded-full shadow-none">
-                <Droplets className="w-3.5 h-3.5" />
-                Start Assessment
-              </Button>
-            </Link>
+            <Button variant="water" size="sm" className="w-full">
+              <Droplets className="w-4 h-4" />
+              Start Assessment
+            </Button>
           </div>
         )}
       </div>

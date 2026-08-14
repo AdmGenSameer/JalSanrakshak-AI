@@ -2,90 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-/* JalRakshak AI Design System - Organic Modernism */
+/* JalRakshak AI Design System - Water Harvesting Theme */
 
 @layer base {
   :root {
-    /* Base Colors - Organic & Neutral */
-    --background: 60 20% 98%; /* Warm off-white (Alabaster) */
-    --foreground: 220 15% 15%; /* Slate charcoal */
+    /* Water-themed color palette */
+    --background: 220 20% 97%;
+    --foreground: 210 40% 8%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card: 210 30% 99%;
+    --card-foreground: 210 40% 8%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover: 210 30% 99%;
+    --popover-foreground: 210 40% 8%;
 
-    /* Primary - Deep Teal / Evergreen */
-    --primary: 185 80% 20%; 
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 185 50% 35%;
-    --primary-dark: 185 90% 10%;
+    /* Ocean blue primary palette */
+    --primary: 200 95% 45%;
+    --primary-foreground: 210 20% 98%;
+    --primary-light: 200 85% 65%;
+    --primary-dark: 200 100% 35%;
 
-    /* Secondary - Subdued Sage/Slate */
-    --secondary: 160 15% 90%;
-    --secondary-foreground: 185 80% 20%;
+    /* Aqua secondary palette */
+    --secondary: 180 60% 85%;
+    --secondary-foreground: 200 50% 20%;
 
-    --muted: 60 10% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 210 30% 92%;
+    --muted-foreground: 210 20% 45%;
 
-    /* Accent - Vibrant Aqua for contrast, used sparsely */
-    --accent: 180 100% 35%;
-    --accent-foreground: 0 0% 100%;
+    /* Teal accent */
+    --accent: 175 70% 55%;
+    --accent-foreground: 210 20% 98%;
 
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 98%;
 
-    --border: 60 15% 85%;
-    --input: 60 15% 92%;
-    --ring: 185 80% 20%;
+    --border: 210 30% 88%;
+    --input: 210 30% 95%;
+    --ring: 200 95% 45%;
 
-    --radius: 0.5rem; /* Tighter radius for editorial feel */
+    --radius: 0.75rem;
 
-    /* Thematic Gradients - subtle and structural */
-    --gradient-hero: radial-gradient(circle at top right, hsl(185 30% 90%), hsl(60 20% 98%) 60%);
-    --gradient-water: linear-gradient(135deg, hsl(185 80% 20%), hsl(180 100% 35%));
+    /* Water-themed custom colors */
+    --water-blue: 200 95% 45%;
+    --water-light: 190 80% 70%;
+    --water-dark: 210 100% 30%;
+    --aqua: 175 70% 55%;
+    --deep-blue: 220 90% 25%;
+    --sky-blue: 200 70% 80%;
 
-    /* Water Tank Colors */
-    --water-light: 199 89% 48%;
-    --water-blue: 204 94% 40%;
-    --water-dark: 201 96% 32%;
+    /* Gradients */
+    --gradient-water: linear-gradient(135deg, hsl(var(--water-blue)), hsl(var(--aqua)));
+    --gradient-ocean: linear-gradient(180deg, hsl(var(--water-light)), hsl(var(--water-dark)));
+    --gradient-sky: linear-gradient(to bottom, hsl(var(--sky-blue)), hsl(var(--water-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--aqua)) 50%, hsl(var(--water-light)) 100%);
 
-    /* Shadows - Deep and crisp */
-    --shadow-soft: 0 10px 40px -10px rgba(10, 30, 40, 0.08);
-    --shadow-glow: 0 0 40px rgba(20, 150, 160, 0.15);
-    
-    /* Animation Easing */
-    --transition-smooth: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Shadows */
+    --shadow-water: 0 10px 40px -10px hsl(var(--water-blue) / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-glow: 0 0 30px hsl(var(--aqua) / 0.4);
+
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 220 20% 10%;
-    --foreground: 60 20% 95%;
+    --background: 210 50% 5%;
+    --foreground: 210 20% 98%;
 
-    --card: 220 18% 12%;
-    --card-foreground: 60 20% 95%;
+    --card: 210 50% 8%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 220 18% 12%;
-    --popover-foreground: 60 20% 95%;
+    --popover: 210 50% 8%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 180 80% 40%;
-    --primary-foreground: 220 20% 10%;
+    --primary: 200 95% 55%;
+    --primary-foreground: 210 50% 5%;
 
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 60 20% 95%;
+    --secondary: 210 40% 15%;
+    --secondary-foreground: 210 20% 98%;
 
-    --muted: 220 15% 18%;
-    --muted-foreground: 220 10% 65%;
+    --muted: 210 40% 15%;
+    --muted-foreground: 210 20% 65%;
 
-    --accent: 180 100% 45%;
-    --accent-foreground: 220 20% 10%;
+    --accent: 175 70% 45%;
+    --accent-foreground: 210 20% 98%;
 
-    --border: 220 15% 25%;
-    --input: 220 15% 20%;
-    --ring: 180 80% 40%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 20% 98%;
 
-    --gradient-hero: radial-gradient(circle at top right, hsl(220 25% 15%), hsl(220 20% 10%) 60%);
+    --border: 210 40% 18%;
+    --input: 210 40% 18%;
+    --ring: 200 95% 55%;
+
+    --water-blue: 200 95% 55%;
+    --water-light: 190 80% 60%;
+    --water-dark: 210 100% 40%;
+    --aqua: 175 70% 45%;
+    --deep-blue: 220 90% 35%;
+    --sky-blue: 200 70% 70%;
   }
 }
 
@@ -95,11 +110,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
+    @apply bg-background text-foreground font-sans;
   }
 
   html {
@@ -108,125 +119,168 @@
 }
 
 @layer components {
-  /* Structural Grain/Noise Texture */
-  .texture-noise {
+  /* Water animations */
+  .water-drop {
+    @apply animate-bounce;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+
+  .wave-animation {
+    background: linear-gradient(-45deg, 
+      hsl(var(--water-blue)), 
+      hsl(var(--aqua)), 
+      hsl(var(--water-light)), 
+      hsl(var(--primary)));
+    background-size: 400% 400%;
+    animation: wave 8s ease-in-out infinite;
+  }
+
+  .ripple-effect {
     position: relative;
+    overflow: hidden;
   }
-  
-  .texture-noise::before {
-    content: "";
+
+  .ripple-effect::before {
+    content: '';
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.6;
-    z-index: 10;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: hsl(var(--aqua) / 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
   }
 
-  /* Refined Glassmorphism - Editorial & Clean */
+  .ripple-effect:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  /* Glass morphism effect */
   .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px) saturate(1.2);
-    -webkit-backdrop-filter: blur(20px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: var(--shadow-soft);
-  }
-  
-  .dark .glass-card {
-    background: rgba(20, 25, 30, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   }
 
-  .glass-nav {
-    background: rgba(250, 249, 246, 0.85); /* Alabaster base with opacity */
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  /* Floating animation */
+  .float {
+    animation: float 3s ease-in-out infinite;
   }
-  
-  .dark .glass-nav {
-    background: rgba(20, 25, 30, 0.85);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  
-  /* Smooth Fade In */
-  .fade-in {
-    animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    opacity: 0;
+
+  /* Water fill animation */
+  .water-fill {
+    background: var(--gradient-ocean);
+    border-radius: 0 0 50% 50%;
+    animation: fill 2s ease-out forwards;
   }
 }
 
-@keyframes fadeIn {
+@keyframes wave {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fill {
   from {
-    opacity: 0;
-    transform: translateY(10px);
+    height: 0%;
   }
   to {
+    height: var(--fill-height, 50%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes droplet {
+  0% {
+    transform: translateY(-20px) scale(0);
+    opacity: 0;
+  }
+  50% {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Water Tank Animations */
-@keyframes wave {
-  0% {
-    transform: translateX(0) scaleY(1);
-  }
-  50% {
-    transform: translateX(-25%) scaleY(0.85);
   }
   100% {
-    transform: translateX(-50%) scaleY(1);
-  }
-}
-
-@keyframes floatBubble {
-  0% {
-    transform: translateY(0) scale(0.6);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-80px) scale(1.2);
-    opacity: 0;
-  }
-}
-
-@keyframes dropFall {
-  0% {
     transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(140px) scale(0.3);
     opacity: 0;
   }
 }
 
-.animate-wave {
-  animation: wave 4s linear infinite;
+@keyframes rain-fall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
-.animate-bubble-1 {
-  animation: floatBubble 3s ease-in-out infinite;
+@keyframes water-rise {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
 }
 
-.animate-bubble-2 {
-  animation: floatBubble 2.5s ease-in-out 0.8s infinite;
+@keyframes bubble-up {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }
 
-.animate-bubble-3 {
-  animation: floatBubble 3.5s ease-in-out 1.5s infinite;
-}
-
-.animate-drop-1 {
-  animation: dropFall 2s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
-}
-
-.animate-drop-2 {
-  animation: dropFall 2.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0.6s infinite;
+@keyframes leaf-grow {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
