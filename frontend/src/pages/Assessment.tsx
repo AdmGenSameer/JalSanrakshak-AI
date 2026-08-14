@@ -237,20 +237,22 @@ const Assessment: React.FC = () => {
   const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
 
-  // Compute form completion progress for WaterTank (do not require lat/lng to hit 100%)
+  // Compute form completion progress for WaterTank (combines step progress and field completeness)
   const formCompletion = (() => {
     const checks = [
       !!formData.name.trim(),
-      !!formData.location.trim(),
       !!formData.dwellers.toString().trim(),
+      !!formData.location.trim(),
       !!formData.roofArea.toString().trim(),
       !!formData.openSpace.toString().trim(),
       !!formData.roofType.trim(),
       !!formData.roofAge.toString().trim(),
-      // soilType excluded from progress (no current input field)
     ];
-    const filled = checks.filter(Boolean).length;
-    return (filled / checks.length) * 100;
+    const filledCount = checks.filter(Boolean).length;
+    const fieldCompletion = (filledCount / checks.length) * 100;
+    const stepProgress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+    // Water tank level rises dynamically with both field completion and step progression
+    return Math.max(fieldCompletion, Math.min(100, stepProgress * 0.75 + (filledCount / checks.length) * 25));
   })();
 
   const updateFormData = (field: keyof FormData, value: string) => {

@@ -37,12 +37,12 @@ const WaterTank: React.FC<WaterTankProps> = ({ progress, className = "" }) => {
 
             {/* Water Fill Layer */}
             <div
-              className="relative w-full transition-all duration-700 ease-out"
+              className="absolute bottom-0 inset-x-0 transition-all duration-700 ease-out z-10"
               style={{ height: `${clampedProgress}%` }}
             >
               {/* Water Gradient Body */}
               <div 
-                className="w-full h-full rounded-b-[1.7rem] relative overflow-hidden"
+                className="w-full h-full rounded-b-[1.6rem] relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(180deg, #38bdf8 0%, #0284c7 45%, #0369a1 100%)'
                 }}
