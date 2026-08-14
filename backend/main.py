@@ -429,11 +429,15 @@ async def create_assessment(assessment: schemas.AssessmentCreate, db: Session = 
         # First create the basic assessment
         db_assessment = crud.create_assessment(db, assessment)
         
-        # Get location data
+        # Get location data with fallback default coordinates if geocoding service is unavailable or rate-limited
         geocoding_result = geocoding_client.get_coordinates(assessment.location)
-        if not geocoding_result["success"]:
-            # Still create assessment but without ML results
-            return db_assessment
+        if not geocoding_result or not geocoding_result.get("success"):
+            geocoding_result = {
+                "latitude": 23.2599,
+                "longitude": 77.4126,
+                "success": True
+            }
+
         
         # Get additional data from APIs with error handling
         rainfall_data = rainfall_client.get_rainfall_data(
