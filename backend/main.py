@@ -172,6 +172,7 @@ def read_root():
 
 # ... (keep all the imports and class definitions the same) ...
 
+@app.post("/geocode", response_model=schemas.GeocodingResponse)
 @app.post("/api/geocode", response_model=schemas.GeocodingResponse)
 def geocode_address(request: schemas.GeocodingRequest):
     """Get coordinates from address using geocoding API"""
@@ -190,6 +191,7 @@ def geocode_address(request: schemas.GeocodingRequest):
             detail=f"Geocoding failed: {str(e)}"
         )
 
+@app.post("/rainfall", response_model=schemas.RainfallResponse)
 @app.post("/api/rainfall", response_model=schemas.RainfallResponse)
 def get_rainfall_data(request: schemas.RainfallRequest):
     """Get rainfall data from external API"""
@@ -208,6 +210,7 @@ def get_rainfall_data(request: schemas.RainfallRequest):
             detail=f"Failed to fetch rainfall data: {str(e)}"
         )
 
+@app.post("/groundwater", response_model=schemas.GroundwaterResponse)
 @app.post("/api/groundwater", response_model=schemas.GroundwaterResponse)
 def get_groundwater_data(request: schemas.GroundwaterRequest):
     """Get groundwater data from external API"""
@@ -226,6 +229,7 @@ def get_groundwater_data(request: schemas.GroundwaterRequest):
             detail=f"Failed to fetch groundwater data: {str(e)}"
         )
 
+@app.post("/soil-type", response_model=schemas.SoilTypeResponse)
 @app.post("/api/soil-type", response_model=schemas.SoilTypeResponse)
 def get_soil_type(request: schemas.SoilTypeRequest):
     """Get soil type data from external API"""
@@ -244,8 +248,7 @@ def get_soil_type(request: schemas.SoilTypeRequest):
             detail=f"Failed to fetch soil type data: {str(e)}"
         )
 
-# ... (keep the rest of the endpoints the same) ...
-
+@app.post("/calculate", response_model=schemas.CalculateResponse)
 @app.post("/api/calculate", response_model=schemas.CalculateResponse)
 def calculate_potential(request: schemas.CalculateRequest):
     """Calculate water harvesting potential"""
@@ -279,6 +282,7 @@ def calculate_potential(request: schemas.CalculateRequest):
             detail=f"Calculation failed: {str(e)}"
         )
 
+@app.post("/recommend", response_model=schemas.RecommendationResponse)
 @app.post("/api/recommend", response_model=schemas.RecommendationResponse)
 def get_recommendations(request: schemas.RecommendationRequest):
     """Get recommendations from ML model"""
@@ -325,6 +329,7 @@ def get_recommendations(request: schemas.RecommendationRequest):
             detail=f"Recommendation generation failed: {str(e)}"
         )
 
+@app.get("/aquifer", response_model=schemas.AquiferInfoResponse)
 @app.get("/api/aquifer", response_model=schemas.AquiferInfoResponse)
 def get_aquifer_info(aquifer_type: str = Query(..., description="Type of aquifer")):
     """Get aquifer information"""
@@ -366,6 +371,7 @@ def get_aquifer_info(aquifer_type: str = Query(..., description="Type of aquifer
         )
 
 # Add a new endpoint to get ML predictions
+@app.post("/predict", response_model=schemas.MLPredictionResponse)
 @app.post("/api/predict", response_model=schemas.MLPredictionResponse)
 async def get_ml_predictions(request: schemas.MLPredictionRequest):
     """Get ML predictions for given inputs"""
