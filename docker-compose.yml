@@ -1,11 +1,8 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend
     restart: always
     expose:
       - "8000"
@@ -25,7 +22,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: frontend
     restart: always
     expose:
       - "80"
@@ -40,4 +36,5 @@ volumes:
 networks:
   dokploy-network:
     external: true
+
 
