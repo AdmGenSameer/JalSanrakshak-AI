@@ -423,6 +423,7 @@ def detect_region_type(location: str, latitude: float, longitude: float) -> str:
 
 # Assessment management endpoints
 @app.post("/assessments/", response_model=schemas.Assessment)
+@app.post("/api/assessments/", response_model=schemas.Assessment)
 async def create_assessment(assessment: schemas.AssessmentCreate, db: Session = Depends(get_db)):
     """Create a new assessment with ML predictions"""
     try:
@@ -525,12 +526,14 @@ async def create_assessment(assessment: schemas.AssessmentCreate, db: Session = 
         return db_assessment
 
 @app.get("/assessments/", response_model=List[schemas.Assessment])
+@app.get("/api/assessments/", response_model=List[schemas.Assessment])
 def read_assessments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """Get all assessments"""
     assessments = crud.get_all_assessments(db, skip=skip, limit=limit)
     return assessments
 
 @app.get("/assessments/{assessment_id}", response_model=schemas.Assessment)
+@app.get("/api/assessments/{assessment_id}", response_model=schemas.Assessment)
 def read_assessment(assessment_id: int, db: Session = Depends(get_db)):
     """Get a specific assessment by ID"""
     db_assessment = crud.get_assessment(db, assessment_id=assessment_id)
@@ -539,6 +542,7 @@ def read_assessment(assessment_id: int, db: Session = Depends(get_db)):
     return db_assessment
 
 @app.put("/assessments/{assessment_id}", response_model=schemas.Assessment)
+@app.put("/api/assessments/{assessment_id}", response_model=schemas.Assessment)
 def update_assessment(assessment_id: int, assessment_update: schemas.AssessmentUpdate, db: Session = Depends(get_db)):
     """Update an assessment with results"""
     # Convert Pydantic model to dict for update
@@ -550,6 +554,7 @@ def update_assessment(assessment_id: int, assessment_update: schemas.AssessmentU
     return db_assessment
 
 @app.delete("/assessments/{assessment_id}")
+@app.delete("/api/assessments/{assessment_id}")
 def delete_assessment(assessment_id: int, db: Session = Depends(get_db)):
     """Delete an assessment"""
     success = crud.delete_assessment(db, assessment_id=assessment_id)
